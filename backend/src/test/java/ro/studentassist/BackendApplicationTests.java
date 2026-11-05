@@ -1,4 +1,4 @@
-package ro.studentassist.backend;
+package ro.studentassist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

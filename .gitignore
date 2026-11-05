@@ -111,3 +111,8 @@ coverage/
 /cypress/screenshots/
 __screenshots__/
 
+# Database files (SQLite)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
