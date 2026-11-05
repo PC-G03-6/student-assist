@@ -1,0 +1,494 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://student-assist.ro/schemas/schedule-schema.json",
+  "title": "UBBFMITimetableSchema",
+  "description": "Schema JSON completă pentru orarul UBB FMI în cadrul aplicației Student Assist. Definește structura datelor de orar extrase prin scraper, a fișierului de seed offline și a DTO-urilor expuse prin API-ul REST conform architecture.md.",
+  "type": "object",
+  "required": [
+    "metadata",
+    "specializations",
+    "groups",
+    "rooms",
+    "teachers",
+    "subjects",
+    "events"
+  ],
+  "properties": {
+    "metadata": {
+      "$ref": "#/definitions/Metadata"
+    },
+    "specializations": {
+      "type": "array",
+      "description": "Lista liniilor de studiu / specializărilor disponibile la UBB FMI.",
+      "items": {
+        "$ref": "#/definitions/Specialization"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "Lista grupelor academice asociate fiecărei linii de studiu.",
+      "items": {
+        "$ref": "#/definitions/Group"
+      }
+    },
+    "rooms": {
+      "type": "array",
+      "description": "Lista sălilor de curs/seminar/laborator cu localizarea și adresa lor fizică (extrase din sali/legenda.html).",
+      "items": {
+        "$ref": "#/definitions/Room"
+      }
+    },
+    "teachers": {
+      "type": "array",
+      "description": "Lista cadrelor didactice.",
+      "items": {
+        "$ref": "#/definitions/Teacher"
+      }
+    },
+    "subjects": {
+      "type": "array",
+      "description": "Lista disciplinelor din planul de învățământ.",
+      "items": {
+        "$ref": "#/definitions/Subject"
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Lista tuturor orelor/activităților de orar programate.",
+      "items": {
+        "$ref": "#/definitions/ScheduleEvent"
+      }
+    }
+  },
+  "definitions": {
+    "Metadata": {
+      "type": "object",
+      "description": "Informații de context despre setul de date extras.",
+      "required": [
+        "faculty",
+        "university",
+        "academicYear",
+        "semester",
+        "sourceUrl",
+        "extractedAt",
+        "version"
+      ],
+      "properties": {
+        "faculty": {
+          "type": "string",
+          "default": "Facultatea de Matematică și Informatică"
+        },
+        "university": {
+          "type": "string",
+          "default": "Universitatea Babeș-Bolyai"
+        },
+        "academicYear": {
+          "type": "string",
+          "pattern": "^20[0-9]{2}-20[0-9]{2}$",
+          "description": "Anul universitar în formatul YYYY-YYYY (ex: 2024-2025)."
+        },
+        "semester": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "Semestrul universitar (1 sau 2)."
+        },
+        "configurationId": {
+          "type": "string",
+          "pattern": "^20[0-9]{2}-[12]$",
+          "description": "Identificator de configurație semestrială (ex: 2024-1, 2025-1)."
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL-ul rădăcină de pe cs.ubbcluj.ro utilizat pentru extragerea datelor."
+        },
+        "extractedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp ISO 8601 al momentului în care datele au fost extrase."
+        },
+        "version": {
+          "type": "string",
+          "description": "Versiunea schemei sau a snapshot-ului de date (ex: 1.0.0)."
+        }
+      }
+    },
+    "Specialization": {
+      "type": "object",
+      "description": "O linie de studiu / program de licență sau master.",
+      "required": [
+        "id",
+        "name",
+        "field",
+        "language",
+        "degree",
+        "year"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificatorul unic al liniei de studiu (ex: I1, I2, I3, MI1, IE2, MaSD1)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Numele complet al liniei de studiu (ex: Informatică - linia de studiu română)."
+        },
+        "field": {
+          "type": "string",
+          "description": "Domeniul de studiu (ex: Informatica, Matematica, Matematica-Informatica)."
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "romana",
+            "engleza",
+            "maghiara",
+            "germana"
+          ],
+          "description": "Limba de predare a liniei de studiu."
+        },
+        "degree": {
+          "type": "string",
+          "enum": [
+            "licenta",
+            "master"
+          ],
+          "description": "Ciclul de studii universitare."
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "description": "Anul de studiu (1, 2, 3 sau 4)."
+        }
+      }
+    },
+    "Group": {
+      "type": "object",
+      "description": "Grupă academică de studenți.",
+      "required": [
+        "id",
+        "name",
+        "specializationId",
+        "year",
+        "subgroups"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificator grupă (ex: 231, 232, 935, 531)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Etichetă vizuală grupă (ex: Grupa 231)."
+        },
+        "specializationId": {
+          "type": "string",
+          "description": "Referință către linia de studiu căreia îi aparține grupa (ex: I3)."
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "description": "Anul de studiu căruia îi aparține grupa."
+        },
+        "subgroups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lista subgrupelor existente (ex: [\"231/1\", \"231/2\"])."
+        }
+      }
+    },
+    "Room": {
+      "type": "object",
+      "description": "Sală de desfășurare a orelor, cu detalii de localizare preluate din legenda sălilor.",
+      "required": [
+        "id",
+        "name",
+        "buildingName",
+        "address"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Codul sălii din URL (ex: 7-I, C335, AAM, DPPD-205)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Denumirea scurtă a sălii (ex: 7/I, C335, AAM)."
+        },
+        "buildingName": {
+          "type": "string",
+          "description": "Denumirea clădirii asociate sălii (ex: Clădirea Centrală UBB, Campus FSEGA, Clădirea Mathematica)."
+        },
+        "address": {
+          "type": "string",
+          "description": "Adresa fizică a clădirii în Cluj-Napoca (ex: Str. Mihail Kogălniceanu, nr. 1)."
+        },
+        "details": {
+          "type": "string",
+          "description": "Detalii descriptive suplimentare din legenda oficială (ex: Sala Nicolae Iorga, etaj 1)."
+        },
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Latitudine geografică (opțională, completată prin modulul buildings)."
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Longitudine geografică (opțională, completată prin modulul buildings)."
+        }
+      }
+    },
+    "Teacher": {
+      "type": "object",
+      "description": "Cadru didactic universitar.",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Codul cadrului didactic din URL (ex: poio1, dima, nivi)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Numele complet al cadrului didactic (ex: Conf. NICULESCU Virginia, Lect. MAIER Mariana)."
+        },
+        "academicTitle": {
+          "type": "string",
+          "description": "Titlul academic dedus (ex: Prof. dr., Conf. dr., Lect. dr., Drd., Asist. dr.)."
+        }
+      }
+    },
+    "Subject": {
+      "type": "object",
+      "description": "Disciplină / materie de studiu.",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Codul disciplinei din URL (ex: MLR5023, MLR5077)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Denumirea completă a materiei (ex: Limbaje formale si tehnici de compilare)."
+        },
+        "shortName": {
+          "type": "string",
+          "description": "Denumire prescurtată opțională (ex: LFTC, PPD, AI)."
+        }
+      }
+    },
+    "ScheduleEvent": {
+      "type": "object",
+      "description": "Un eveniment de orar (oră de curs, seminar sau laborator).",
+      "required": [
+        "id",
+        "groupId",
+        "formation",
+        "day",
+        "dayIndex",
+        "startHour",
+        "endHour",
+        "startTime",
+        "endTime",
+        "frequency",
+        "type",
+        "subject",
+        "teacher",
+        "room"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Hash determinist SHA-256 calculat din atributele unice ale orei pentru deduplicare și identificare stabilă."
+        },
+        "groupId": {
+          "type": "string",
+          "description": "ID-ul grupei principale căreia îi este alocată ora (ex: 231)."
+        },
+        "subgroup": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Subgrupa specifică dacă activitatea este parțială (ex: 231/1, 231/2), sau null dacă este comună întregii grupe."
+        },
+        "formation": {
+          "type": "string",
+          "description": "Valoarea exactă a formației din tabelul UBB (ex: 231, 231/2, I3)."
+        },
+        "day": {
+          "type": "string",
+          "enum": [
+            "Luni",
+            "Marti",
+            "Miercuri",
+            "Joi",
+            "Vineri",
+            "Sambata",
+            "Duminica"
+          ],
+          "description": "Ziua săptămânii în limba română."
+        },
+        "dayIndex": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7,
+          "description": "Index numeric al zilei (1 = Luni, 2 = Marți, ..., 5 = Vineri)."
+        },
+        "startHour": {
+          "type": "integer",
+          "minimum": 7,
+          "maximum": 22,
+          "description": "Ora de început (ex: 8, 10, 12, 14, 16, 18)."
+        },
+        "endHour": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 23,
+          "description": "Ora de finalizare (ex: 10, 12, 14, 15, 18, 20)."
+        },
+        "startTime": {
+          "type": "string",
+          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Ora de start formatată HH:mm (ex: 08:00)."
+        },
+        "endTime": {
+          "type": "string",
+          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Ora de sfârșit formatată HH:mm (ex: 10:00, 15:00)."
+        },
+        "frequency": {
+          "type": "string",
+          "enum": [
+            "all",
+            "week1",
+            "week2"
+          ],
+          "description": "Periodicitatea desfășurării orei: all (săptămânal), week1 (săptămâna 1/impară), week2 (săptămâna 2/pară)."
+        },
+        "frequencyLabel": {
+          "type": "string",
+          "description": "Eticheta brută din tabelul UBB (ex: 'săptămânal', 'sapt. 1', 'sapt. 2')."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Curs",
+            "Seminar",
+            "Laborator"
+          ],
+          "description": "Tipul activității didactice."
+        },
+        "subject": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Codul disciplinei (ex: MLR5023)."
+            },
+            "name": {
+              "type": "string",
+              "description": "Numele complet al disciplinei (ex: Limbaje formale si tehnici de compilare)."
+            }
+          }
+        },
+        "teacher": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Codul cadrului didactic (ex: poio1)."
+            },
+            "name": {
+              "type": "string",
+              "description": "Numele cadrului didactic (ex: Drd. POP Ioan Daniel)."
+            }
+          }
+        },
+        "room": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Codul sălii (ex: 7-I)."
+            },
+            "name": {
+              "type": "string",
+              "description": "Denumirea sălii (ex: 7/I)."
+            },
+            "buildingName": {
+              "type": "string",
+              "description": "Numele clădirii (ex: Clădirea Centrală UBB)."
+            },
+            "address": {
+              "type": "string",
+              "description": "Adresa clădirii (ex: Str. Mihail Kogălniceanu, nr. 1)."
+            }
+          }
+        }
+      }
+    },
+    "ApiScheduleResponse": {
+      "type": "object",
+      "description": "Structura de răspuns pentru endpoint-ul REST GET /api/schedule?group={id}.",
+      "required": [
+        "group",
+        "specialization",
+        "totalEvents",
+        "events"
+      ],
+      "properties": {
+        "group": {
+          "$ref": "#/definitions/Group"
+        },
+        "specialization": {
+          "$ref": "#/definitions/Specialization"
+        },
+        "totalEvents": {
+          "type": "integer",
+          "description": "Numărul total de evenimente din orar pentru această grupă."
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScheduleEvent"
+          }
+        }
+      }
+    },
+    "ApiGroupsResponse": {
+      "type": "array",
+      "description": "Structura de răspuns pentru endpoint-ul REST GET /api/groups?specialization=&year=.",
+      "items": {
+        "$ref": "#/definitions/Group"
+      }
+    }
+  }
+}
