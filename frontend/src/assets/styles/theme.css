@@ -1,0 +1,104 @@
+/* frontend/src/assets/styles/theme.css */
+
+:root {
+  /*  Culori de Brand (minimalist, neutru) */
+  --color-primary: #0f172a;
+  --color-primary-light: #334155;
+  --color-primary-dark: #020617;
+  --color-accent: #3b82f6;        /* folosit doar pentru focus */
+
+  /*  Fundal & Suprafete */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: rgba(226, 232, 240, 0.9);
+  --color-border-subtle: rgba(241, 245, 249, 0.8);
+  --color-border-dark: #cbd5e1;
+
+  /* Text & Tipografie  */
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #ffffff;
+  --font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /*  Selectie (chips, segmented control, butoane active)  */
+  --color-selected-bg: rgba(15, 23, 42, 0.09);
+  --color-selected-border: rgba(15, 23, 42, 0.2);
+
+  /*  Culori Semantice: Orar  */
+  /* Toate perechile text/fundal au contrast >= 4.5:1 (WCAG AA) */
+  /* Laborator: rosu (contrast 5.7:1) */
+  --badge-lab-bg: #fff1f2;
+  --badge-lab-text: #be123c;
+  --badge-lab-border: rgba(254, 205, 211, 0.7);
+
+  /* Seminar: chihlimbar (contrast 4.9:1) */
+  --badge-seminar-bg: #fffbeb;
+  --badge-seminar-text: #b45309;
+  --badge-seminar-border: rgba(253, 230, 138, 0.7);
+
+  /* Curs: verde (contrast 5.2:1) */
+  --badge-curs-bg: #ecfdf5;
+  --badge-curs-text: #047857;
+  --badge-curs-border: rgba(167, 243, 208, 0.7);
+
+  /* Culori Semantice: Transport CTP */
+  --badge-bus-bg: #f5f3ff;
+  --badge-bus-text: #6d28d9;
+  --badge-bus-border: rgba(221, 214, 254, 0.7);
+
+  --status-live-bg: #ecfdf5;
+  --status-live-text: #047857;
+  --status-live-dot: #10b981;
+
+  --status-delay-bg: #fff1f2;
+  --status-delay-text: #be123c;
+
+  /*  Geometrie  */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /*  Umbre  */
+  --shadow-subtle: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --shadow-card-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --shadow-floating: 0 16px 36px -6px rgba(15, 23, 42, 0.12), 0 6px 16px -3px rgba(15, 23, 42, 0.06);
+
+  /*  Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-blur: blur(20px);
+
+  /*  Layout */
+  --bottom-nav-height: 72px;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Focus vizibil pentru navigarea din tastatura */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
