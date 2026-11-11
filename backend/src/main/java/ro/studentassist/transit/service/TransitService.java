@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import ro.studentassist.config.TimedCache;
+import ro.studentassist.transit.client.TranzyClient;
+import ro.studentassist.transit.config.TranzyProperties;
+import ro.studentassist.transit.dto.*;
 
 @Service
 public class TransitService {

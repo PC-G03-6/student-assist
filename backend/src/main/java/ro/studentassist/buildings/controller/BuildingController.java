@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.controller;
 
 import java.util.List;
 
@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import lombok.RequiredArgsConstructor;
+import ro.studentassist.buildings.service.BuildingRouteService;
+import ro.studentassist.buildings.dto.BuildingResponse;
+import ro.studentassist.buildings.dto.BuildingRouteResponse;
+import ro.studentassist.buildings.service.BuildingService;
 
 @RestController
 @RequestMapping("/api/buildings")

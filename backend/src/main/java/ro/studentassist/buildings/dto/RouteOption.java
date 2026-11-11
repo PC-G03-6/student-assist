@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.dto;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.seed;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import ro.studentassist.buildings.model.Building;
+import ro.studentassist.buildings.repository.BuildingRepo;
 
 @Component
 @RequiredArgsConstructor

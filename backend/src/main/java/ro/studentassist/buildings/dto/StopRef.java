@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.dto;
 
 public record StopRef(
         Long stopId,

@@ -1,6 +1,6 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.routing;
 
-record RoutePattern(
+public record RoutePattern(
         Long routeId,
         Integer directionId,
         String shapeId,
@@ -9,11 +9,11 @@ record RoutePattern(
         double[] lons,
         double[] cumulativeMeters) {
 
-    record NearestPoint(int index, double distanceMeters) {
+    public record NearestPoint(int index, double distanceMeters) {
     }
 
     /** Finds the shape point closest to the given coordinates. */
-    NearestPoint nearest(double lat, double lon) {
+    public NearestPoint nearest(double lat, double lon) {
         double cosLat = Math.cos(Math.toRadians(lat));
         double bestSquared = Double.MAX_VALUE;
         int bestIndex = 0;
@@ -30,7 +30,7 @@ record RoutePattern(
     }
 
     /** Returns the distance in meters along the shape between two point indexes. */
-    double lengthBetween(int fromIndex, int toIndex) {
+    public double lengthBetween(int fromIndex, int toIndex) {
         return cumulativeMeters[toIndex] - cumulativeMeters[fromIndex];
     }
 }

@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.config;
 
 import java.net.http.HttpClient;
 import java.time.Duration;

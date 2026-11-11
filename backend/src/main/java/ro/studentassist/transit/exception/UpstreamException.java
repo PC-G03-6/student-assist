@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.exception;
 
 public class UpstreamException extends RuntimeException {
 
