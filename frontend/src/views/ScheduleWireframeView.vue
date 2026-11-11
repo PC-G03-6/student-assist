@@ -22,10 +22,15 @@ interface ClassEvent {
   frequency: Frequency
 }
 
-const selectedDay = ref('Luni')
-const selectedWeek = ref('all')
-
 const days = ['Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri']
+
+const getInitialDay = () => {
+  const weekday = new Date().getDay()
+  return days[weekday >= 1 && weekday <= 5 ? weekday - 1 : 0]
+}
+
+const selectedDay = ref(getInitialDay())
+const selectedWeek = ref('all')
 
 const weekOptions = [
   { value: 'all', label: 'Toate' },
