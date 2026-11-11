@@ -1,10 +1,13 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import ro.studentassist.buildings.exception.BuildingNotFoundException;
+import ro.studentassist.buildings.model.Building;
+import ro.studentassist.buildings.repository.BuildingRepo;
 
 @Service
 @RequiredArgsConstructor

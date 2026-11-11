@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

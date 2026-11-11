@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

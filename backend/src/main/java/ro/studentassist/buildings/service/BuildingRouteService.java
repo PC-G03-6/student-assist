@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,10 +13,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import ro.studentassist.transit.Stop;
-import ro.studentassist.transit.TransitRoute;
-import ro.studentassist.transit.TransitService;
-import ro.studentassist.transit.Vehicle;
+import ro.studentassist.buildings.dto.*;
+import ro.studentassist.buildings.model.Building;
+import ro.studentassist.buildings.routing.GeoUtils;
+import ro.studentassist.buildings.routing.RoutePattern;
+import ro.studentassist.buildings.routing.RoutePatternIndex;
+import ro.studentassist.transit.dto.Stop;
+import ro.studentassist.transit.dto.TransitRoute;
+import ro.studentassist.transit.service.TransitService;
+import ro.studentassist.transit.dto.Vehicle;
 
 @Service
 @RequiredArgsConstructor

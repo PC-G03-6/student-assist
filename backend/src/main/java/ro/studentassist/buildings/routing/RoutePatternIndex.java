@@ -1,4 +1,4 @@
-package ro.studentassist.buildings;
+package ro.studentassist.buildings.routing;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -8,13 +8,13 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import ro.studentassist.config.TimedCache;
-import ro.studentassist.transit.ShapePoint;
-import ro.studentassist.transit.TransitService;
-import ro.studentassist.transit.Trip;
-import ro.studentassist.transit.TranzyProperties;
+import ro.studentassist.transit.dto.ShapePoint;
+import ro.studentassist.transit.service.TransitService;
+import ro.studentassist.transit.dto.Trip;
+import ro.studentassist.transit.config.TranzyProperties;
 
 @Component
-class RoutePatternIndex {
+public class RoutePatternIndex {
 
     private final TimedCache<List<RoutePattern>> patterns;
 
@@ -25,7 +25,7 @@ class RoutePatternIndex {
     }
 
     /** Returns one pattern per route, direction and shape, with precomputed distances along the shape. */
-    List<RoutePattern> getPatterns() {
+    public List<RoutePattern> getPatterns() {
         return patterns.get();
     }
 

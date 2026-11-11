@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.client;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 
 import lombok.RequiredArgsConstructor;
+import ro.studentassist.transit.exception.UpstreamException;
+import ro.studentassist.transit.dto.*;
 
 @Component
 @RequiredArgsConstructor

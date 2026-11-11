@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,4 +1,6 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.service;
+
+import ro.studentassist.transit.dto.Vehicle;
 
 import java.time.Duration;
 import java.time.Instant;

@@ -1,4 +1,4 @@
-package ro.studentassist.transit;
+package ro.studentassist.transit.controller;
 
 import java.util.List;
 
@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import ro.studentassist.transit.service.TransitService;
+import ro.studentassist.transit.dto.Stop;
+import ro.studentassist.transit.dto.TransitRoute;
+import ro.studentassist.transit.dto.Vehicle;
 
 @RestController
 @RequestMapping("/api/transit")
